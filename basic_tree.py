@@ -38,7 +38,6 @@ def tree_alphabet():
         alphabet.append(chr(i))
     alphabet.sort()
     return alphabet
-
 def create_tree():
     alphabet=tree_alphabet()
     nood = Node()

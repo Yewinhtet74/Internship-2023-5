@@ -1,38 +1,39 @@
 import basic_tree
 import json
 import random
+
 tree = None
 count = 0
 
 
 def findneighbour(title, lr, trr=basic_tree.create_tree()):
-    #print(trr.title,title)
-    if trr.title == title:return trr.right.title if lr else trr.left.title
+    # print(trr.title,title)
+    if trr.title == title: return trr.right.title if lr else trr.left.title
     if trr.title < title: return findneighbour(title, lr, trr.right)
     if trr.title > title: return findneighbour(title, lr, trr.left)
 
 
 def insert_data(tree, info, index=0):
-    #print(tree.title,info['mail'],index)
+    # print(tree.title,info['mail'],index)
     if index >= len(info['mail']):
-        #print('Added data below')
+        # print('Added data below')
         tree.data = info
     else:
         # print(tree.data,tree.title, index,mail[index])
         # print(info['mail'][index],type(tree.title))
         if tree.title and info['mail'][index] > tree.title:
-            #print('aaa',tree.right)
+            # print('aaa',tree.right)
             if not (tree.right):
-                #print('hhhh')
+                # print('hhhh')
                 tree.right = basic_tree.Node()
                 tree.right.title = findneighbour(tree.title, 1)
-            #print('go right',tree.right,tree.right.title)
+            # print('go right',tree.right,tree.right.title)
             insert_data(tree.right, info, index)
         elif tree.title and info['mail'][index] < tree.title:
             if not (tree.left):
                 tree.left = basic_tree.Node()
                 tree.left.title = findneighbour(tree.title, 0)
-            #print('go left',tree.left,tree.left.title)
+            # print('go left',tree.left,tree.left.title)
             insert_data(tree.left, info, index)
         elif tree.title and info['mail'][index] == tree.title:
             if len(info['mail']) == index + 1:
@@ -110,34 +111,41 @@ def print_all(tree):
     if tree.right:  print_all(tree.right)
     if tree.link:   print_all(tree.link)
 
-all_data={}
+
+all_data = {}
+
+
 def get_all(tree):
     global all_data
     global count
     count += 1
     # print(tree.title)
-    if tree.data is not None:  all_data.update({len(all_data):  tree.data})
+    if tree.data is not None:  all_data.update({len(all_data): tree.data})
     if tree.left:   get_all(tree.left)
     if tree.link:   get_all(tree.link)
     if tree.right:  get_all(tree.right)
 
-def random_email():
-    length=random.randrange(4,21)
-    em=''
-    for _ in range(length):
-        em+=chr(random.randrange(97,123))
-    return em+'@gmail.com'
 
+def random_email():
+    length = random.randrange(4, 21)
+    em = ''
+    for _ in range(length):
+        em += chr(random.randrange(97, 123))
+    return em + '@gmail.com'
+
+
+import time
 
 f = open('user_data.json')
 # returns JSON object as
 # a dictionary
 a_data = json.load(f)
 if not tree:   tree = basic_tree.create_tree_node()
+s = time.time()
 for a in a_data.values():
-    insert_data(tree,a)
-
-
+    insert_data(tree, a)
+e = time.time()
+print(s, e, e - s)
 while True:
     choose = input('Enter 1 for retrieve user\nEnter 0 for print all user\nEnter any key for create user\n>>>')
     if choose == '0':
@@ -150,15 +158,18 @@ while True:
         if not tree:   tree = basic_tree.create_tree_node()
         mail = input('Enter your email:')
         count = 0
+        s=time.time()
         ans = get_data(tree, mail)
+        e=time.time()
         print(ans if ans else 'NO EMAIL FOUND!')
-        print(count)
-    elif choose=='2':
+        print(count,s,e,e-s)
+    elif choose == '2':
         if not tree:   tree = basic_tree.create_tree_node()
         for _ in range(1000):
-            insert_data(tree,{'mail': random_email(), 'name': 'name', 'password': 'password', 'address': 'address', 'phone': '094575211'})
-        count=0
-        all_data={}
+            insert_data(tree, {'mail': random_email(), 'name': 'name', 'password': 'password', 'address': 'address',
+                               'phone': '094575211'})
+        count = 0
+        all_data = {}
         get_all(tree)
         print(count)
         f = open("user_data.json", "w")
