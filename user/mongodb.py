@@ -29,6 +29,12 @@ class DB:
 
 '''
 db=DB()
+db.collection.update_one(
+    {'email':'yewin04@gmail.com'},
+    {'$set':
+         {'name':'Ye'}
+     }
+)
 #db.insert_user({'email':'yewin04@gmail.com','name':'Ye','age':22})
 print(db.exist_user('yewin04@gmail.com'))
 '''

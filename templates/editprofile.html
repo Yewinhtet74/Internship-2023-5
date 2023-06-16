@@ -5,7 +5,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
     <meta charset="UTF-8">
-    <title>Profile</title>
+    <title>Edit Profile</title>
     <style>
         .gradient-custom {
 /* fallback for old browsers */
@@ -20,6 +20,8 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
     </style>
 </head>
 <body>
+<form method="post" action="">
+{% csrf_token %}
 <section class="vh-100" style="background-color: #f4f5f7;">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -30,18 +32,8 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
               style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
               <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
                 alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
-              <h5>{% if user.name %}
-                  {{ user.name }}
-                  {% else %}
-                  No Username
-                  {% endif %}
-              </h5>
-              <p>{% if user.job %}
-                  {{ user.job }}
-                  {% else %}
-                  No Job
-                  {% endif %}
-              </p>
+              <h5><input type="text" value="{{ user.name }}" placeholder="Full Name" style="width: 200px" name="name"></h5>
+              <p><input type="text" value="{{ user.job }}" placeholder="Job" style="width: 180px;" name="job"></p>
               <i class="far fa-edit mb-5"></i>
             </div>
             <div class="col-md-8">
@@ -51,17 +43,12 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
                 <div class="row pt-1">
                   <div class="col-6 mb-3">
                     <h6>Email</h6>
-                    <p class="text-muted">{{ user.email }}</p>
+                    <p class="text-muted" >{{ user.email }}</p>
+                      <input type="hidden" value="{{ user.email }}" name="email">
                   </div>
                   <div class="col-6 mb-3">
                     <h6>Phone</h6>
-                    <p class="text-muted">
-                        {% if user.phone %}
-                        {{ user.phone }}
-                         {% else %}
-                        *********
-                        {% endif %}
-                    </p>
+                    <p class="text-muted"><input type="number" name="phone" value="{{ user.phone }}"></p>
                   </div>
                 </div>
                 <h6>Projects</h6>
@@ -69,27 +56,15 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
                 <div class="row pt-1">
                   <div class="col-6 mb-3">
                     <h6>Age</h6>
-                    <p class="text-muted">
-                        {% if user.age %}
-                        {{ user.age }}
-                        {% else %}
-                        --
-                        {% endif %}
-                    </p>
+                    <p class="text-muted"><input type="number" name="age" value="{{ user.age }}"></p>
                   </div>
                   <div class="col-6 mb-3">
                     <h6>Hoppy</h6>
-                    <p class="text-muted">
-                        {% if user.hoppy %}
-                        {{ user.hoppy }}
-                        {% else %}
-                        ---------
-                        {% endif %}
-                    </p>
+                    <p class="text-muted"><input type="text" name="hoppy" value="{{ user.hoppy }}"></p>
                   </div>
                 </div>
                 <div class="d-flex justify-content-end">
-                  <a href="editprofile?email={{ user.email }}"><button class="btn btn-primary">Edit</button></a>
+                  <a href="editprofile"><input class="btn btn-primary" type="submit"></a>
                 </div>
               </div>
             </div>
@@ -99,5 +74,6 @@ background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 1
     </div>
   </div>
 </section>
+</form>
 </body>
 </html>

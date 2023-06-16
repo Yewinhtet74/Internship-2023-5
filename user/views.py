@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 import json
 from . import algo
 from . import mongodb
@@ -30,12 +30,41 @@ def user(request):
         elif not ddd['password']==pwd:
             return render(request,"user.html",{'success':data,'status':'The password is incorrect. Please try again','email':email})
         else:
-            return profile(request,data)
+            return redirect('/user/profile?email='+email)
+            #return profile(request,email)
         return render(request,"user.html",{'name':'1234'})
     return render(request,"user.html")
 
-def profile(request,data):
-    return render(request,"profile.html",{'status':'Success','data':data})
+def profile(request):
+    email=request.GET['email']
+    db=mongodb.DB()
+    data=db.retrieve_user(email)
+    return render(request,"profile.html",{'status':'Success','user':data})
+
+def editprofile(request):
+    if request.method=='GET':
+        email=request.GET['email']
+        db=mongodb.DB()
+        data=db.retrieve_user(email)
+        return render(request,'editprofile.html',{'user':data})
+    if request.method=='POST':
+        name=request.POST['name']
+        job=request.POST['job']
+        email=request.POST['email']
+        phone=request.POST['phone']
+        age=request.POST['age']
+        hoppy=request.POST['hoppy']
+        data={'name':name,'job':job,'phone':phone,'age':age,'hoppy':hoppy}
+        db=mongodb.DB()
+        db.collection.update_one(
+            {'email': email},
+            {'$set':
+                 data
+             }
+        )
+        return redirect('/user/profile?email=' + email)
+        #return profile(request,email)
+    return render(request,'editprofile.html')
 def register(request):
     if request.method=='POST':
         email=request.POST['email']
