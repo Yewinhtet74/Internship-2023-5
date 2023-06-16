@@ -14,7 +14,10 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete= models.CASCADE,related_name='blog_posts')
     updated_on = models.DateTimeField(auto_now= True)
     content = models.TextField()
-    img = models.ImageField(upload_to='images/', default='')
+    img = models.ImageField(upload_to='images/', blank=True)
+    img2 = models.ImageField(upload_to='images/', blank=True)
+    img3 = models.ImageField(upload_to='images/', blank=True)
+    img4 = models.ImageField(upload_to='images/', blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=STATUS, default=0)
 
