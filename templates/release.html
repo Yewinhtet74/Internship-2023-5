@@ -1,0 +1,18 @@
+{% extends 'layout/base.html' %}
+{% block title %}Ticket Release{% endblock %}
+{% block body %}
+    <div class="text-center">
+        <div class="display-1 text-center mt-2 mb-1" style="color: #FFD700">Winning Ticket</div><br>
+        <h1 class=" mb-4" style="font-size: 200px">{{ data.ticket_winner }}</h1>
+        {% if data.user_session==data.winner_username %}
+            <div class="display-2 text-center mt-2 mb-1" style="color: #FFD700">Congratulations</div><br>
+        {% else %}
+            <h3  class=" text-secondary ">Winner Username</h3>
+        {% endif %}
+        <div class="row justify-content-center mt-3">
+            <hr class="col-6" style="width: 50%;border-width: 3px">
+        </div>
+        <h1 class=" " style="">{{ data.winner_username }}</h1>
+    </div>
+
+{% endblock %}

@@ -1,4 +1,5 @@
 {% extends 'layout/base.html' %}
+{% block title %}Home{% endblock %}
 {% block body %}
     <!-- Head-->
     <div class=" py-5">
@@ -12,6 +13,8 @@
                         <p class="btn bg-dark text-light fw-bold col-1 mb-3 mx-2" style="opacity:0.8"  id="{{ i }}">{{ i }}</p>
                         {% elif j==2 %}
                         <p class="btn bg-success text-light fw-bold col-1 mb-3 mx-2" style="opacity:0.8"  id="{{ i }}">{{ i }}</p>
+                        {% elif j==3 %}
+                        <p class="btn bg-warning fw-bold col-1 mb-3 mx-2" style="opacity:0.8"  id="{{ i }}">{{ i }}</p>
                         {% else %}
                         <button class="btn bg-light fw-bold col-1 mb-3 mx-2" style="opacity:0.9"  onclick="add('{{ i }}')" id="{{ i }}">{{ i }}</button>
                         {% endif %}
@@ -24,6 +27,7 @@
 
                 </div>
                 <input type="hidden" value="" name="tickets" id="ticket">
+                <input type="hidden" value="" name="order_order" id="">
             </form>
             <script>
             function add(num){

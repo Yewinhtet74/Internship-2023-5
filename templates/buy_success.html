@@ -1,16 +1,27 @@
 {% extends 'layout/base.html' %}
-
+{% block title %}Purchase Success{% endblock %}
 {% block body %}
-    <div class="display-1 text-center mt-2 mb-5">Buy Tickets Successfully</div>
-    {% if data %}
-        <div class="my-1 py-2" style="min-height: 60px">
-            <div class="alert {% if data.status=='fail' %}bg-danger{% else %}bg-success{% endif %} d-flex bg-opacity-50" role="alert">
-                 The tickets you have bought are
-                {% for tikt in data.tickets.split(',') %}
-                    <p class="btn bg-success text-light  fw-bold ms-2 px-4" style="width: 90px;">{{ tikt }}</p>
-                {% endfor %}
-                 . Waiting for admin to approved your purchased. These status can be seen in your profile.
-            </div>
+    <div class="display-1 text-center mt-2 mb-5">Order Tickets Successfully</div>
+    <div class="row justify-content-center bg-light my-3 p-5 bg-opacity-50 h2">
+        <div class="col-4 mx-5 mb-2"> Selected Tickets</div>
+        <div class="col-5 mx-5">
+            {% for tikt in data.tickets.split(',') %}
+                <p class="btn bg-info text-light  fw-bold mb-3 me-2 px-4" style="width: 90px;">{{ tikt }}</p>
+            {% endfor %}
         </div>
-    {% endif %}
+        <div class="col-4 mx-5 mb-2"> Price Per Ticket</div>
+        <div class="col-5 mx-5"> {{ data.price }} Kyats</div>
+        <div class="col-4 mx-5 mb-2"> Quantity</div>
+        <div class="col-5 mx-5"> {{ data.quantity }}</div>
+        <div class="col-4 mx-5 mb-2"> Total Price</div>
+        <div class="col-5 mx-5">{{ data.total_price }} Kyats</div>
+    </div>
+    <hr style="border-width: 3px">
+    <div class="row justify-content-end">
+    <div class="col-5 h5">
+        After your payment are verified by admin,<br> ordered tickets are bought successfully.
+    </div>
+    <a href="/profile" class="col-4 btn btn-light fw-bold py-3">View ordered history</a>
+    </div>
+    <hr style="border-width: 3px">
 {% endblock %}

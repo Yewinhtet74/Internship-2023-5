@@ -1,9 +1,9 @@
 {% extends 'layout/base.html' %}
-
+{% block title %}User Profile{% endblock %}
 {% block body %}
     <div class="display-1 text-center mt-2 mb-5">User profile</div>
 
-    <div class="h2 text-center my-3">Purchased History</div>
+    <div class="h2 text-center my-3">Ordered History</div>
     <table class="table table-striped table-dark" style="opacity: 0.9">
       <thead>
         <tr>
@@ -20,11 +20,11 @@
                   <tr class="bg-light">
                       <th scope="row">{{ ord.num }}</th>
                       <td>{{ data.user.username }}</td>
-                      <td>12/1/2023 8:12:30</td>
+                      <td>{{ ord.created_at }}</td>
                       <td>
                           <div class="row" >
                             {% for tik in ord.tickets.split(',') %}
-                              <button class=" btn {% if ord.verify %}bg-success text-light{% elif ord.verify==None %} bg-warning{% else %}bg-light text-dark{% endif %} d-inline fw-bold me-2 px-4" style="width: 90px;">{{ tik }}</button>
+                              <button class=" btn {% if ord.verify %}bg-success text-light{% elif ord.verify==None %} bg-warning text-dark{% else %}bg-light text-dark{% endif %} d-inline fw-bold me-2 px-4 mb-2" style="width: 90px;">{{ tik }}</button>
                             {% endfor %}
                           </div>
                       </td>
